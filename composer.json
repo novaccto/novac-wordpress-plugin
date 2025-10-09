@@ -1,0 +1,44 @@
+{
+    "name": "novac/novac",
+    "description": "The official plugin of Novac Payment Gateway for WordPress",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "Novac\\Novac\\": "includes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "bajoski34",
+            "email": "olaobajua@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0",
+        "wp-coding-standards/wpcs": "^3.0",
+        "phpcompatibility/phpcompatibility-wp": "^2.1"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PaymentPluginTemplate\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "lint": "phpcs --standard=WordPress .",
+        "fix": "phpcbf --standard=WordPress ."
+    },
+    "support": {
+        "issues": "https://github.com/bajoski34/wordpress-payment-plugin-template/issues",
+        "source": "https://github.com/bajoski34/wordpress-payment-plugin-template"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

@@ -72,10 +72,13 @@ class Admin {
             true
         );
 
+        // Enqueue WordPress components styles.
+        wp_enqueue_style( 'wp-components' );
+
         wp_enqueue_style(
             'novac-admin-style',
             $asset_url . '/style-index.css',
-            [],
+            [ 'wp-components' ],
             $asset_file['version']
         );
 

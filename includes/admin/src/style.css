@@ -1,0 +1,132 @@
+.novac-admin {
+    max-width: 1200px;
+    padding: 20px;
+}
+
+.novac-header {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e5e5e5;
+}
+
+.novac-header h1 {
+    font-size: 32px;
+    margin: 0 0 10px 0;
+    color: #1e293b;
+}
+
+.novac-subtitle {
+    font-size: 16px;
+    color: #64748b;
+    margin: 0;
+}
+
+.components-card {
+    margin-top: 20px;
+}
+
+.components-base-control {
+    margin-bottom: 24px;
+}
+
+.components-base-control__help {
+    font-size: 13px;
+    color: #666;
+}
+
+/* Transactions Page */
+.novac-transactions-header {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    align-items: flex-end;
+}
+
+.novac-search-bar {
+    flex: 1;
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+.novac-search-bar .components-base-control {
+    flex: 1;
+    margin: 0;
+}
+
+.novac-transactions-table {
+    overflow-x: auto;
+}
+
+.novac-transactions-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.novac-transactions-table thead {
+    background: #f8f9fa;
+}
+
+.novac-transactions-table th {
+    text-align: left;
+    padding: 12px;
+    font-weight: 600;
+    color: #1e293b;
+    border-bottom: 2px solid #e5e7eb;
+    font-size: 14px;
+}
+
+.novac-transactions-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 14px;
+}
+
+.novac-transactions-table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+.novac-transactions-table code {
+    background: #f1f5f9;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: monospace;
+    color: #475569;
+}
+
+.novac-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.novac-pagination span {
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .novac-transactions-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .novac-search-bar {
+        flex-direction: column;
+    }
+
+    .novac-transactions-table {
+        font-size: 12px;
+    }
+
+    .novac-transactions-table th,
+    .novac-transactions-table td {
+        padding: 8px;
+    }
+}

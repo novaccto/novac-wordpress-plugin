@@ -52,13 +52,23 @@ class Admin {
             return;
         }
 
-        $asset_url = plugins_url( 'admin/build', NOVAC_PLUGIN_FILE );
+        $build_path = plugin_dir_path( NOVAC_PLUGIN_FILE ) . 'includes/admin/build/';
+        $asset_url  = plugins_url( 'includes/admin/build', NOVAC_PLUGIN_FILE );
+        
+        // Load asset file for dependencies and version.
+        $asset_file = require $build_path . 'index.asset.php';
+        
+        // Register 'react' as an alias to 'wp-element' if not already registered.
+        if ( ! wp_script_is( 'react', 'registered' ) ) {
+            wp_register_script( 'react', false, [ 'wp-element' ], false, false );
+            wp_register_script( 'react-dom', false, [ 'wp-element' ], false, false );
+        }
 
         wp_enqueue_script(
             'novac-admin',
             $asset_url . '/index.js',
-            [ 'wp-element', 'wp-api-fetch', 'wp-components', 'wp-data', 'wp-i18n' ],
-            filemtime( plugin_dir_path( NOVAC_PLUGIN_FILE ) . 'admin/build/index.js' ),
+            $asset_file['dependencies'],
+            $asset_file['version'],
             true
         );
 
@@ -66,7 +76,7 @@ class Admin {
             'novac-admin-style',
             $asset_url . '/style-index.css',
             [],
-            filemtime( plugin_dir_path( NOVAC_PLUGIN_FILE ) . 'admin/build/style-index.css' )
+            $asset_file['version']
         );
 
         wp_localize_script( 'novac-admin', 'novacData', [

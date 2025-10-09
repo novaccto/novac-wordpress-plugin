@@ -1,5 +1,5 @@
 {
-  "name": "payment-plugin-template",
+  "name": "novac",
   "version": "0.0.1",
   "description": "The official plugin of Novac Payment Gateway for WordPress.",
   "main": "novac.php",
@@ -15,15 +15,9 @@
     "wordpress",
     "payment",
     "gateway",
-    "plugin",
-    "template",
-    "donations",
-    "memberships",
-    "lms",
-    "forms",
-    "booking"
+    "plugin"
   ],
-  "author": "Payment Plugin Template Contributors",
+  "author": "Abraham Olaobaju",
   "license": "GPL-2.0-or-later",
   "devDependencies": {
     "@wordpress/scripts": "^26.0.0"

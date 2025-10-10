@@ -240,8 +240,25 @@ const App = () => {
                 <p className="novac-subtitle">Manage your payment gateway settings and transactions</p>
             </div>
 
-            {currentPage === 'novac-settings' && <SettingsTab />}
-            {currentPage === 'novac-transactions' && <TransactionsTab />}
+            <nav className="nav-tab-wrapper">
+                <a 
+                    href="?page=novac-settings" 
+                    className={`nav-tab ${currentPage === 'novac-settings' ? 'nav-tab-active' : ''}`}
+                >
+                    Settings
+                </a>
+                <a 
+                    href="?page=novac-transactions" 
+                    className={`nav-tab ${currentPage === 'novac-transactions' ? 'nav-tab-active' : ''}`}
+                >
+                    Transactions
+                </a>
+            </nav>
+
+            <div className="novac-content">
+                {currentPage === 'novac-settings' && <SettingsTab />}
+                {currentPage === 'novac-transactions' && <TransactionsTab />}
+            </div>
         </div>
     );
 };

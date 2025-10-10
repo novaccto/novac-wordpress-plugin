@@ -153,19 +153,21 @@ const TransactionsTab = () => {
                             value={search}
                             onChange={setSearch}
                         />
-                        <Button variant="secondary" onClick={handleSearch}>Search</Button>
+                        <Button variant="primary" onClick={handleSearch}>Search</Button>
                     </div>
-                    <SelectControl
-                        label="Status"
-                        value={statusFilter}
-                        options={[
-                            { label: "All Statuses", value: "" },
-                            { label: "Successful", value: "successful" },
-                            { label: "Pending", value: "pending" },
-                            { label: "Failed", value: "failed" },
-                        ]}
-                        onChange={setStatusFilter}
-                    />
+                    <div className="novac-status-filter">
+                        <SelectControl
+                            label="Status"
+                            value={statusFilter}
+                            options={[
+                                { label: "All Statuses", value: "" },
+                                { label: "Successful", value: "successful" },
+                                { label: "Pending", value: "pending" },
+                                { label: "Failed", value: "failed" },
+                            ]}
+                            onChange={setStatusFilter}
+                        />
+                    </div>
                 </div>
 
                 {loading && <Spinner />}

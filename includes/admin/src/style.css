@@ -97,13 +97,15 @@
 /* Transactions Page */
 .novac-transactions-header {
     display: flex;
-    gap: 20px;
+    gap: 16px;
     margin-bottom: 20px;
     align-items: flex-end;
+    flex-wrap: wrap;
 }
 
 .novac-search-bar {
     flex: 1;
+    min-width: 300px;
     display: flex;
     gap: 10px;
     align-items: flex-end;
@@ -112,6 +114,23 @@
 .novac-search-bar .components-base-control {
     flex: 1;
     margin: 0;
+}
+
+.novac-search-bar .components-button {
+    height: 36px;
+    padding: 0 16px;
+}
+
+.novac-status-filter {
+    min-width: 200px;
+}
+
+.novac-status-filter .components-base-control {
+    margin: 0;
+}
+
+.novac-status-filter .components-base-control__label {
+    margin-bottom: 8px;
 }
 
 .novac-transactions-table {
@@ -183,10 +202,21 @@
     .novac-transactions-header {
         flex-direction: column;
         align-items: stretch;
+        gap: 12px;
     }
 
     .novac-search-bar {
         flex-direction: column;
+        min-width: 100%;
+        gap: 8px;
+    }
+
+    .novac-search-bar .components-button {
+        width: 100%;
+    }
+
+    .novac-status-filter {
+        min-width: 100%;
     }
 
     .novac-transactions-table {

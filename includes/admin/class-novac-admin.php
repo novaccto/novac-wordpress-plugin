@@ -25,36 +25,67 @@ class Admin {
             'dashicons-money-alt',
             56
         );
+
+        add_submenu_page(
+            'novac-settings',
+            __( 'Settings', 'novac' ),
+            __( 'Settings', 'novac' ),
+            'novac_manage_settings',
+            'novac-settings'
+        );
+
+        add_submenu_page(
+            'novac-settings',
+            __( 'Transactions', 'novac' ),
+            __( 'Transactions', 'novac' ),
+            'novac_view_transactions',
+            'novac-transactions',
+            [ __CLASS__, 'render_admin_page' ]
+        );
     }
 
     /**
      * Enqueue React app for admin page.
      */
     public static function enqueue_scripts( $hook ) {
-        if ( $hook !== 'toplevel_page_novac-settings' ) {
+        if ( ! in_array( $hook, [ 'toplevel_page_novac-settings', 'novac-payments_page_novac-transactions' ], true ) ) {
             return;
         }
 
-        $asset_url = plugins_url( 'admin/build', NOVAC_PLUGIN_FILE );
+        $build_path = plugin_dir_path( NOVAC_PLUGIN_FILE ) . 'includes/admin/build/';
+        $asset_url  = plugins_url( 'includes/admin/build', NOVAC_PLUGIN_FILE );
+        
+        // Load asset file for dependencies and version.
+        $asset_file = require $build_path . 'index.asset.php';
+        
+        // Register 'react' as an alias to 'wp-element' if not already registered.
+        if ( ! wp_script_is( 'react', 'registered' ) ) {
+            wp_register_script( 'react', false, [ 'wp-element' ], false, false );
+            wp_register_script( 'react-dom', false, [ 'wp-element' ], false, false );
+        }
 
         wp_enqueue_script(
             'novac-admin',
             $asset_url . '/index.js',
-            [ 'wp-element', 'wp-api-fetch', 'wp-components', 'wp-data', 'wp-i18n' ],
-            filemtime( plugin_dir_path( NOVAC_PLUGIN_FILE ) . 'admin/build/index.js' ),
+            $asset_file['dependencies'],
+            $asset_file['version'],
             true
         );
 
+        // Enqueue WordPress components styles.
+        wp_enqueue_style( 'wp-components' );
+
         wp_enqueue_style(
             'novac-admin-style',
-            $asset_url . '/index.css',
-            [],
-            filemtime( plugin_dir_path( NOVAC_PLUGIN_FILE ) . 'admin/build/index.css' )
+            $asset_url . '/style-index.css',
+            [ 'wp-components' ],
+            $asset_file['version']
         );
 
         wp_localize_script( 'novac-admin', 'novacData', [
             'root'  => esc_url_raw( rest_url( 'novac/v1/' ) ),
             'nonce' => wp_create_nonce( 'wp_rest' ),
+            'page'  => isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : 'novac-settings',
         ] );
     }
 
@@ -81,6 +112,18 @@ class Admin {
                 'permission_callback' => fn() => current_user_can( 'novac_manage_settings' ),
             ],
         ] );
+
+        register_rest_route( 'novac/v1', '/transactions', [
+            'methods'             => 'GET',
+            'callback'            => [ __CLASS__, 'get_transactions' ],
+            'permission_callback' => fn() => current_user_can( 'novac_view_transactions' ),
+        ] );
+
+        register_rest_route( 'novac/v1', '/transactions/(?P<id>\d+)', [
+            'methods'             => 'GET',
+            'callback'            => [ __CLASS__, 'get_transaction' ],
+            'permission_callback' => fn() => current_user_can( 'novac_view_transactions' ),
+        ] );
     }
 
     public static function get_settings() {
@@ -105,5 +148,39 @@ class Admin {
         update_option( 'novac_settings', $settings );
 
         return rest_ensure_response( $settings );
+    }
+
+    public static function get_transactions( $request ) {
+        $page     = $request->get_param( 'page' ) ?? 1;
+        $per_page = $request->get_param( 'per_page' ) ?? 20;
+        $search   = $request->get_param( 'search' ) ?? null;
+        $status   = $request->get_param( 'status' ) ?? null;
+
+        $result = \Novac\Novac\Database\Transactions::get_all( [
+            'page'     => $page,
+            'per_page' => $per_page,
+            'search'   => $search,
+            'status'   => $status,
+        ] );
+
+        return rest_ensure_response( $result );
+    }
+
+    public static function get_transaction( $request ) {
+        $id = $request->get_param( 'id' );
+
+        global $wpdb;
+        $table       = \Novac\Novac\Database\Transactions::get_table_name();
+        $transaction = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table WHERE id = %d", $id ) );
+
+        if ( ! $transaction ) {
+            return new \WP_Error( 'not_found', 'Transaction not found', [ 'status' => 404 ] );
+        }
+
+        if ( ! empty( $transaction->metadata ) ) {
+            $transaction->metadata = json_decode( $transaction->metadata, true );
+        }
+
+        return rest_ensure_response( $transaction );
     }
 }

@@ -1,0 +1,125 @@
+.novac-payment-form-wrapper {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.novac-payment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.novac-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.novac-form-group label {
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+.novac-form-group .required {
+    color: #e74c3c;
+}
+
+.novac-form-group input[type="text"],
+.novac-form-group input[type="email"],
+.novac-form-group input[type="number"] {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.novac-form-group input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.novac-amount-display {
+    padding: 12px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    font-weight: 600;
+    color: #333;
+    font-size: 18px;
+}
+
+.novac-submit-btn {
+    padding: 14px 24px;
+    background: #3498db;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+.novac-submit-btn:hover {
+    background: #2980b9;
+}
+
+.novac-submit-btn:active {
+    transform: translateY(1px);
+}
+
+.novac-submit-btn:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+}
+
+.novac-form-messages {
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    display: none;
+}
+
+.novac-form-messages.show {
+    display: block;
+}
+
+.novac-form-messages.error {
+    background: #fee;
+    border: 1px solid #fcc;
+    color: #c33;
+}
+
+.novac-form-messages.success {
+    background: #efe;
+    border: 1px solid #cfc;
+    color: #3c3;
+}
+
+.novac-form-messages.info {
+    background: #eff7ff;
+    border: 1px solid #bee5eb;
+    color: #0c5460;
+}
+
+.novac-loading-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ffffff;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: novac-spin 0.6s linear infinite;
+    margin-left: 8px;
+}
+
+@keyframes novac-spin {
+    to { transform: rotate(360deg); }
+}

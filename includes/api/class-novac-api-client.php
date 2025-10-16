@@ -44,8 +44,9 @@ class Api_Client {
 	public static function initiate_checkout( $data ) {
 		$settings = self::get_settings();
 
+		// TODO: store data in database.
+
 		$body = [
-			'publicKey'   => $settings['public_key'],
 			'amount'      => $data['amount'],
 			'currency'    => $data['currency'] ?? 'NGN',
 			'customerEmail' => $data['email'],

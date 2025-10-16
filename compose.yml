@@ -3,6 +3,7 @@ version: "3.9"
 services:
   db:
     image: mysql:5.7
+    platform: linux/amd64 # Force x86_64 emulation
     volumes:
       - database:/var/lib/mysql
     restart: always
@@ -27,6 +28,8 @@ services:
       WORDPRESS_DB_PASSWORD: wordpress
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DEBUG: 1
+      WP_DEBUG_DISPLAY: 1
+      WP_DEBUG_LOG: 1
       WP_ALLOW_MULTISITE: 1
 
 volumes:

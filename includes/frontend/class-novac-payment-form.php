@@ -123,6 +123,7 @@ class Payment_Form {
 	 * Handle payment initiation AJAX request.
 	 */
 	public static function handle_payment_initiation() {
+
 		check_ajax_referer( 'novac_payment', 'nonce' );
 
 		$name        = isset( $_POST['name'] ) ? sanitize_text_field( $_POST['name'] ) : '';
@@ -143,10 +144,28 @@ class Payment_Form {
 			'description' => $description,
 		] );
 
-		if ( is_wp_error( $result ) ) {
-			wp_send_json_error( [ 'message' => $result->get_error_message() ] );
-		}
+//        wp_send_json_success( [
+//                'checkout_url' => 'https://google.com',
+//                'reference'    => '5645645454',
+//        ] );
 
+        if ( is_wp_error( $result ) ) {
+            $error_message = $result->get_error_message();
+            $error_data = $result->get_error_data();
+
+            // Check if there's an HTTP response body in the data
+            if ( isset( $error_data['body'] ) ) {
+                $body = $error_data['body'];
+            } else {
+                $body = null;
+            }
+
+            wp_send_json_error([
+                    'message' => $error_message,
+                    'body'    => $body,
+                    'data'    => $error_data,
+            ]);
+        }
 		// Store transaction in database.
 		$transaction_ref = $result['data']['transactionRef'] ?? '';
 		if ( ! empty( $transaction_ref ) ) {

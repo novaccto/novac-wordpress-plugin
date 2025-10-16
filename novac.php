@@ -51,6 +51,8 @@ Admin::init();
 require_once plugin_dir_path( __FILE__ ) . 'includes/webhooks/class-novac-handler.php';
 Handler::init();
 
+require_once plugin_dir_path( __FILE__ ) . 'includes/api/class-novac-api-client.php';
+
 // Initialize frontend.
 require_once plugin_dir_path( __FILE__ ) . 'includes/frontend/class-novac-payment-form.php';
 Payment_Form::init();

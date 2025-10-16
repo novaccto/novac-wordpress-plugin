@@ -19,6 +19,8 @@
             // Get form data
             const formData = $form.serialize();
 
+            console.log(formData);
+
             // Make AJAX request
             $.ajax({
                 url: novacFrontend.ajaxUrl,

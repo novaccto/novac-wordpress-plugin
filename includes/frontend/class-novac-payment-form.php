@@ -131,29 +131,32 @@ class Payment_Form {
 		$amount      = isset( $_POST['amount'] ) ? floatval( $_POST['amount'] ) : 0;
 		$currency    = isset( $_POST['currency'] ) ? sanitize_text_field( $_POST['currency'] ) : 'NGN';
 		$description = isset( $_POST['description'] ) ? sanitize_text_field( $_POST['description'] ) : 'Payment';
+        $phone       = isset( $_POST['phone'] ) ? sanitize_text_field( $_POST['phone'] ) : '';
 
-		if ( empty( $name ) || empty( $email ) || $amount <= 0 ) {
-			wp_send_json_error( [ 'message' => __( 'Please fill all required fields', 'novac' ) ] );
+		if ( empty( $name ) || empty( $email ) || $amount <= 0 || empty( $currency) ) {
+			wp_send_json_error( [ 'message' => __( 'Please fill all required fields: name, email, amount, and currency', 'novac' ) ] );
 		}
 
-		$result = Api_Client::initiate_checkout( [
-			'name'        => $name,
-			'email'       => $email,
-			'amount'      => $amount,
-			'currency'    => $currency,
-			'description' => $description,
-		] );
-
-//        wp_send_json_success( [
-//                'checkout_url' => 'https://google.com',
-//                'reference'    => '5645645454',
-//        ] );
+        try {
+            $result = Api_Client::initiate_checkout([
+                    'name' => $name,
+                    'email' => $email,
+                    'amount' => $amount,
+                    'currency' => $currency,
+                    'tx_ref' => 'WP_' . uniqid('novac_', true),
+                    'description' => $description,
+                    'phone' => $phone,
+            ]);
+        } catch ( \Throwable $e ) {
+            error_log('Api_Client error: ' . $e->getMessage());
+            wp_send_json_error(['message' => 'Payment initiation failed: ' . $e->getMessage()]);
+        }
 
         if ( is_wp_error( $result ) ) {
             $error_message = $result->get_error_message();
             $error_data = $result->get_error_data();
 
-            // Check if there's an HTTP response body in the data
+            // Check if there's an HTTP response body in the data.
             if ( isset( $error_data['body'] ) ) {
                 $body = $error_data['body'];
             } else {
@@ -167,7 +170,7 @@ class Payment_Form {
             ]);
         }
 		// Store transaction in database.
-		$transaction_ref = $result['data']['transactionRef'] ?? '';
+		$transaction_ref = $result['data']['transactionReference'] ?? '';
 		if ( ! empty( $transaction_ref ) ) {
 			Transactions::insert( [
 				'transaction_ref' => $transaction_ref,
@@ -181,7 +184,7 @@ class Payment_Form {
 		}
 
 		wp_send_json_success( [
-			'checkout_url' => $result['data']['checkoutUrl'] ?? '',
+			'checkout_url' => $result['data']['paymentRedirectUrl'] ?? '',
 			'reference'    => $transaction_ref,
 		] );
 	}

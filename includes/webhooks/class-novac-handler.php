@@ -9,6 +9,7 @@ namespace Novac\Novac\Webhooks;
 
 use Novac\Novac\Database\Transactions;
 use Novac\Novac\Api\Api_Client;
+use Novac\Novac\Logger\Logger;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -26,6 +27,7 @@ class Handler {
 	 * Handle webhook from Novac.
 	 */
 	public static function handle_webhook() {
+		$logger = Logger::instance();
 		if ( ! isset( $_GET['novac-webhook'] ) ) {
 			return;
 		}
@@ -50,17 +52,7 @@ class Handler {
 		$transaction = Transactions::get_by_ref( $transaction_ref );
 
 		if ( ! $transaction ) {
-			// Create new transaction if it doesn't exist.
-			Transactions::insert( [
-				'transaction_ref' => $transaction_ref,
-				'customer_email'  => $verification['data']['customerEmail'] ?? '',
-				'customer_name'   => $verification['data']['customerName'] ?? '',
-				'amount'          => $verification['data']['amount'] ?? 0,
-				'currency'        => $verification['data']['currency'] ?? 'NGN',
-				'status'          => $verification['data']['status'] ?? 'pending',
-				'payment_method'  => $verification['data']['paymentMethod'] ?? null,
-				'metadata'        => $verification['data']['metadata'] ?? null,
-			] );
+			wp_send_json_error( [ 'message' => 'Not a valid transaction reference' ], 400 );
 		} else {
 			// Update existing transaction.
 			Transactions::update( $transaction_ref, [

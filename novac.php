@@ -35,6 +35,9 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 const NOVAC_PLUGIN_FILE = __FILE__;
 
+// Initialize logger.
+require_once plugin_dir_path( NOVAC_PLUGIN_FILE ) . 'includes/logger/class-novac-logger.php';
+
 // Initialize user roles and capabilities.
 require_once plugin_dir_path( __FILE__ ) . 'includes/users/class-novac-roles.php';
 Roles::init();

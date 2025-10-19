@@ -4,6 +4,9 @@ namespace Novac\Novac\Users;
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
+
+use Novac\Novac\Logger\Logger;
+
 class Roles {
 
     /**
@@ -52,16 +55,24 @@ class Roles {
      * Activation hook: Add roles and capabilities.
      */
     public static function activate() {
+		$logger = Logger::instance();
+	    $logger->info('Activating Novac Payments');
         self::add_roles();
+	    $logger->info('Added Novac Payments roles');
         self::add_caps();
+	    $logger->info('Adding Novac Payments capabilities');
     }
 
     /**
      * Deactivation hook: Remove roles and capabilities.
      */
     public static function deactivate() {
+	    $logger = Logger::instance();
+	    $logger->info('Deactivating Novac Payments');
         self::remove_caps();
+	    $logger->info('Removed Novac Payments capabilities');
         self::remove_roles();
+	    $logger->info('Removed Novac Payments roles');
     }
 
     /**

@@ -57,11 +57,21 @@ https://yoursite.com/?novac-webhook=1
 [novac_payment_form amount="1000" currency="NGN" description="Product Purchase" button_text="Pay Now"]
 ```
 
+#### Form Customization
+```
+[novac_payment_form amount="1000" currency="NGN" description="Product Purchase" button_text="Pay Now" text_color="#F4F4F5" container_color="#111827" button_color="#EAB308" button_text_color="#111827"]
+```
+
 **Shortcode Parameters:**
 - `amount` - Fixed amount (optional, leave empty for user input)
 - `currency` - Currency code (default: NGN)
 - `description` - Payment description (default: "Payment")
 - `button_text` - Button text (default: "Pay Now")
+- `text_color` - Text Color (default: #111111)
+- `container_color` - Container Color
+- `button_color` - Button Color
+- `button_text_color` - Button Text Color
+  
 
 ### Using Gutenberg Block
 

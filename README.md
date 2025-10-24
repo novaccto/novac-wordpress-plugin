@@ -31,7 +31,7 @@ WordPress payment plugin for accepting payments via Novac Payment Gateway.
 ## Configuration
 
 ### API Keys
-1. Get your API keys from [Novac Dashboard](https://dashboard.novacpayment.com)
+1. Get your API keys from [Novac Dashboard](https://app.novacpayment.com)
 2. Go to **Novac Payments > Settings**
 3. Enter your **Public Key** and **Secret Key**
 4. Select **Mode**: Test (for development) or Live (for production)

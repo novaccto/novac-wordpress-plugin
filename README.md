@@ -150,6 +150,7 @@ Two custom roles are created:
 ### Building Assets
 
 ```bash
+composer install
 npm install
 npm run build
 ```

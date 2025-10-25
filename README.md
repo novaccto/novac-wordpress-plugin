@@ -1,4 +1,4 @@
-# Novac Payment Plugin
+# Novac
 
 WordPress payment plugin for accepting payments via Novac Payment Gateway.
 

@@ -43,7 +43,7 @@ class Logger {
 	private function __construct() {
 		$upload_dir     = wp_upload_dir();
 		$log_dir        = $upload_dir['basedir'] . '/novac-logs';
-		$this->log_file = $log_dir . '/novac-' . date( 'Y-m-d' ) . '.log';
+		$this->log_file = $log_dir . '/novac-' . gmdate( 'Y-m-d' ) . '.log';
 		$this->enabled  = get_option( 'novac_enable_logging', true );
 		$this->min_level = get_option( 'novac_log_level', self::INFO );
 

@@ -54,10 +54,10 @@ class Admin {
 
         $build_path = plugin_dir_path( NOVAC_PLUGIN_FILE ) . 'includes/admin/build/';
         $asset_url  = plugins_url( 'includes/admin/build', NOVAC_PLUGIN_FILE );
-        
+
         // Load asset file for dependencies and version.
         $asset_file = require $build_path . 'index.asset.php';
-        
+
         // Register 'react' as an alias to 'wp-element' if not already registered.
         if ( ! wp_script_is( 'react', 'registered' ) ) {
             wp_register_script( 'react', false, [ 'wp-element' ], false, false );
@@ -178,7 +178,7 @@ class Admin {
         }
 
         if ( ! empty( $transaction->metadata ) ) {
-            $transaction->metadata = json_decode( $transaction->metadata, true );
+            $transaction->metadata = wp_json_decode( $transaction->metadata, true );
         }
 
         return rest_ensure_response( $transaction );

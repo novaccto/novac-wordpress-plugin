@@ -8,8 +8,7 @@
  * Author URI: https://www.novacpayment.com
  * Developer: Novac Payments Developers
  * Developer URI: https://developer.novacpayment.com
- * Text Domain: novacpayments
- * Domain Path: /languages
+ * Text Domain: novac
  *
  * Requires at least: 5.8
  * Requires PHP: 7.4
@@ -33,7 +32,9 @@ defined( 'ABSPATH' ) || exit;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-const NOVAC_PLUGIN_FILE = __FILE__;
+define( 'NOVAC_PLUGIN_FILE', __FILE__ );
+define( 'NOVAC_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+define( 'NOVAC_PLUGIN_VERSION', '0.0.1' );
 
 // Initialize logger.
 require_once plugin_dir_path( NOVAC_PLUGIN_FILE ) . 'includes/logger/class-novac-logger.php';

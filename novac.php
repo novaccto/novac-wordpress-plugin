@@ -30,8 +30,6 @@ use Novac\Novac\Blocks\Payment_Block;
 
 defined( 'ABSPATH' ) || exit;
 
-require_once __DIR__ . '/vendor/autoload.php';
-
 define( 'NOVAC_PLUGIN_FILE', __FILE__ );
 define( 'NOVAC_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'NOVAC_PLUGIN_VERSION', '0.0.1' );

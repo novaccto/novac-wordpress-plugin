@@ -8,6 +8,7 @@
     "build:js": "wp-scripts build",
     "build:css": "wp-scripts build",
     "lint:js": "wp-scripts lint-js",
+    "zip": "pnpm build && wp-scripts plugin-zip",
     "lint:css": "wp-scripts lint-style",
     "test": "wp-scripts test-unit-js"
   },
@@ -19,6 +20,18 @@
   ],
   "author": "Abraham Olaobaju",
   "license": "GPL-2.0-or-later",
+  "files": [
+    "includes",
+    "frontend",
+    "composer.lock",
+    "composer.json",
+    "novac.php",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "changelog.txt",
+    "readme.txt"
+  ],
   "devDependencies": {
     "@wordpress/scripts": "^26.0.0"
   },

@@ -80,7 +80,8 @@ class Roles {
      */
     private static function add_roles() {
         foreach ( self::ROLES as $role => $data ) {
-            add_role( $role, __( $data['label'], 'novac' ), $data['caps'] );
+            $label = $data['label'];
+            add_role( $role, $label, $data['caps'] );
         }
     }
 

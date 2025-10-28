@@ -59,9 +59,10 @@ class Admin {
         $asset_file = require $build_path . 'index.asset.php';
 
         // Register 'react' as an alias to 'wp-element' if not already registered.
+// Register 'react' as an alias to 'wp-element' if not already registered.
         if ( ! wp_script_is( 'react', 'registered' ) ) {
-            wp_register_script( 'react', false, [ 'wp-element' ], false, false );
-            wp_register_script( 'react-dom', false, [ 'wp-element' ], false, false );
+            wp_register_script( 'react', false, [ 'wp-element' ], NOVAC_PLUGIN_VERSION, false );
+            wp_register_script( 'react-dom', false, [ 'wp-element' ], NOVAC_PLUGIN_VERSION, false );
         }
 
         wp_enqueue_script(
@@ -170,8 +171,12 @@ class Admin {
         $id = $request->get_param( 'id' );
 
         global $wpdb;
-        $table       = \Novac\Novac\Database\Transactions::get_table_name();
-        $transaction = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table WHERE id = %d", $id ) );
+        $table = \Novac\Novac\Database\Transactions::get_table_name();
+
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- safe direct query for custom table
+        $transaction = $wpdb->get_row(
+            $wpdb->prepare( "SELECT * FROM $table WHERE id = %d", $id )
+        );
 
         if ( ! $transaction ) {
             return new \WP_Error( 'not_found', 'Transaction not found', [ 'status' => 404 ] );

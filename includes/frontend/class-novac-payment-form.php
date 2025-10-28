@@ -101,8 +101,8 @@ class Payment_Form {
 
         ob_start();
         ?>
-        <div class="novac-payment-form-wrapper" <?php echo $wrapper_style; ?>>
-            <form class="novac-payment-form" id="novac-payment-form" <?php echo $form_style; ?>>
+        <div class="novac-payment-form-wrapper" <?php echo wp_kses_post( $wrapper_style ); ?>>
+            <form class="novac-payment-form" id="novac-payment-form" <?php echo wp_kses_post( $form_style ); ?>>
                 <div class="novac-form-messages"></div>
 
                 <div class="novac-form-group">
@@ -136,7 +136,7 @@ class Payment_Form {
                 <input type="hidden" name="nonce" value="<?php echo esc_attr( wp_create_nonce( 'novac_payment' ) ); ?>" />
 
                 <div class="novac-form-group">
-                    <button type="submit" class="novac-submit-btn" <?php echo $button_style; ?>>
+                    <button type="submit" class="novac-submit-btn" <?php echo wp_kses_post( $button_style ); ?>>
                         <?php echo esc_html( $atts['button_text'] ); ?>
                     </button>
                 </div>
